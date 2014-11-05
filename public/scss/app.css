@@ -1,0 +1,54 @@
+.app {
+  color: #484c58;
+  font-family: SourceSansPro,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 15px; }
+  .app .app-header-container {
+    padding: 0 20px;
+    background-color: #30323A;
+    clear: both; }
+    .app .app-header-container .app-header {
+      position: relative;
+      height: 60px;
+      max-width: 940px;
+      min-width: 760px;
+      margin: auto; }
+      .app .app-header-container .app-header .app-brand {
+        float: left;
+        width: 48px;
+        height: 60px;
+        opacity: .34;
+        background-size: 28px 32px; }
+      .app .app-header-container .app-header .header-tabs {
+        float: left;
+        margin: 0px; }
+        .app .app-header-container .app-header .header-tabs li {
+          display: inline-block;
+          min-width: 150px;
+          margin: 0;
+          padding: 0; }
+          .app .app-header-container .app-header .header-tabs li a {
+            display: block;
+            height: 100%;
+            height: 60px;
+            line-height: 60px;
+            padding-top: 1px;
+            text-transform: uppercase;
+            letter-spacing: .025em;
+            font-size: 13px;
+            font-weight: 700;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-smoothing: antialiased;
+            text-decoration: none;
+            text-align: center;
+            color: #76777F;
+            background-color: #30323A; }
+            .app .app-header-container .app-header .header-tabs li a:hover {
+              background-color: #FFFFFF; }
+  .app .app-body-container {
+    padding-bottom: 40px;
+    margin-top: 40px;
+    max-width: 940px;
+    min-width: 768px;
+    margin-left: auto;
+    margin-right: auto; }

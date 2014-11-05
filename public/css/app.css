@@ -1,0 +1,108 @@
+.left {
+  float: left;
+}
+body {
+  background: #ddd;
+}
+.app {
+  color: #484c58;
+  font-family: SourceSansPro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+}
+.app .app-header-container {
+  padding: 0 20px;
+  background-color: #465be8;
+  clear: both;
+}
+.app .app-header-container .app-header {
+  position: relative;
+  height: 60px;
+  max-width: 940px;
+  min-width: 760px;
+  margin: auto;
+}
+.app .app-header-container .app-header .app-brand {
+  float: left;
+  width: 48px;
+  height: 60px;
+  opacity: 0.34;
+  background-size: 28px 32px;
+}
+.app .app-header-container .app-header .header-tabs {
+  float: left;
+  margin: 0px;
+}
+.app .app-header-container .app-header .header-tabs li {
+  display: inline-block;
+  min-width: 150px;
+  margin: 0;
+  padding: 0;
+}
+.app .app-header-container .app-header .header-tabs li a {
+  display: block;
+  height: 100%;
+  height: 60px;
+  line-height: 60px;
+  padding-top: 1px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-size: 13px;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-decoration: none;
+  text-align: center;
+  color: #bbb;
+  background-color: #465be8;
+}
+.app .app-header-container .app-header .header-tabs li a:hover {
+  background-color: #ddd;
+}
+.app .app-header-container .app-header .header-tabs li a .fa {
+  line-height: 10px;
+  margin-right: 10px;
+}
+.app .app-header-container .app-header .header-tabs li a.active {
+  background-color: #ddd;
+}
+.app .app-body-container {
+  padding-bottom: 40px;
+  margin-top: 40px;
+  max-width: 940px;
+  min-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.app-selectors h1 {
+  text-rendering: optimizeLegibility;
+  font-size: 20px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  margin: 0 0 15px;
+}
+.app-list {
+  outline: 0;
+  border-radius: 0.3125em;
+  border: 1px solid #d0d1d5;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+.app-list li {
+  border-bottom: 1px solid #d0d1d5;
+  color: #484c58;
+  display: block;
+  overflow: hidden;
+}
+.app-list li a {
+  opacity: 1;
+  background-color: #fcfcfd;
+  display: block;
+  padding: 12px 0 11px;
+  color: #484c58;
+  padding-left: 35px;
+}

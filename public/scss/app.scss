@@ -1,0 +1,122 @@
+// COLORS
+$primary-background: #DDD;
+$primary-color: #7AC729;
+// $blue: #30323A;
+$blue: #465BE8;
+
+
+// UTILS
+.left {
+    float:left;
+}
+
+
+
+body {
+    background: $primary-background;
+}
+
+.app {
+    color: #484c58;
+    font-family: SourceSansPro,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    .app-header-container {
+        padding: 0 20px;
+        background-color: $blue;
+        // background-color: #30323A;
+        clear:both;
+        .app-header {
+            position: relative;
+            height: 60px;
+
+            max-width: 940px; 
+            min-width: 760px; 
+            margin: auto;
+
+            .app-brand {
+                float: left;
+                width: 48px;
+                height: 60px;
+                opacity: .34;
+                // background: url(images/logo.png) no-repeat left center;
+                background-size: 28px 32px;
+            }
+
+            .header-tabs {
+                float:left;
+                margin: 0px;
+                li {
+                    display: inline-block;
+                    min-width: 150px;
+                    margin: 0;
+                    padding: 0;
+
+                    a {
+                        display: block;
+                        height: 100%;
+                        height: 60px;
+                        line-height: 60px;
+                        padding-top: 1px;
+                        text-transform: uppercase;
+                        letter-spacing: .025em;
+                        font-size: 13px;
+                        font-weight: 700;
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                        font-smoothing: antialiased;
+                        text-decoration: none;
+                        text-align: center;
+                        // color: #76777F;
+                        color: #BBB;
+                        background-color: $blue;
+
+                        &:hover {
+                            background-color: $primary-background;
+                        }
+
+                        .fa {
+                            line-height: 10px;
+                            margin-right: 10px;
+                        }
+                    }
+                    a.active {
+                        background-color: $primary-background;
+                    }
+                }
+            }
+        }
+    }
+
+    .app-body-container {
+        padding-bottom: 40px;
+        margin-top: 40px;
+        max-width: 940px;
+        min-width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+// FORMS
+
+.app-selectors {
+    h1 {
+        text-rendering: optimizeLegibility;
+        font-size: 20px;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-smoothing: antialiased;
+        margin: 0 0 15px;
+    }
+}
+.app-list {
+    outline: 0;border-radius: .3125em;border: 1px solid #D0D1D5;list-style-type: none;margin: 0;padding: 0;overflow: auto;
+    li {
+        border-bottom: 1px solid #D0D1D5;color: #484c58;display: block;overflow: hidden;
+        a {
+            opacity: 1;background-color: #fcfcfd;display: block;padding: 12px 0 11px;color: #484c58;padding-left: 35px;
+        }
+    }    
+}
