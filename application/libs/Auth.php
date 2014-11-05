@@ -22,4 +22,32 @@ class Auth
             exit();
         }
     }
+    public static function isManager()
+    {
+        // initialize the session
+        Session::init();
+
+        // if user is still not logged in, then destroy session, handle user as "not logged in" and
+        // redirect user to login page
+        if ($_SESSION['user_account_type']!="2") {
+            header('location: ' . URL . 'index');
+            // to prevent fetching views via cURL (which "ignores" the header-redirect above) we leave the application
+            // the hard way, via exit(). @see https://github.com/panique/php-login/issues/453
+            exit();
+        }
+    }
+    public static function isRH()
+    {
+        // initialize the session
+        Session::init();
+
+        // if user is still not logged in, then destroy session, handle user as "not logged in" and
+        // redirect user to login page
+        if ($_SESSION['user_account_type']!="1") {
+            header('location: ' . URL . 'index');
+            // to prevent fetching views via cURL (which "ignores" the header-redirect above) we leave the application
+            // the hard way, via exit(). @see https://github.com/panique/php-login/issues/453
+            exit();
+        }
+    }
 }
