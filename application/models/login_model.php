@@ -38,6 +38,8 @@ class LoginModel
         // get user's data
         // (we check if the password fits the password_hash via password_verify() some lines below)
         $sth = $this->db->prepare("SELECT user_id,
+                                          companies.company_id,
+                                          company_name,
                                           user_name,
                                           user_email,
                                           user_password_hash,
@@ -46,11 +48,11 @@ class LoginModel
                                           user_failed_logins,
                                           user_last_failed_login
                                    FROM   users
-                                   WHERE  (user_name = :user_name OR user_email = :user_name)
-                                          AND user_provider_type = :provider_type");
+                                   LEFT JOIN companies ON companies.company_id = users.company_id
+                                   WHERE  (user_name = :user_name OR user_email = :user_name)");
         // DEFAULT is the marker for "normal" accounts (that have a password etc.)
         // There are other types of accounts that don't have passwords etc. (FACEBOOK)
-        $sth->execute(array(':user_name' => $_POST['user_name'], ':provider_type' => 'DEFAULT'));
+        $sth->execute(array(':user_name' => $_POST['user_name']));
         $count =  $sth->rowCount();
         // if there's NOT one result
         if ($count != 1) {
@@ -82,6 +84,8 @@ class LoginModel
             Session::set('user_logged_in', true);
             Session::set('user_id', $result->user_id);
             Session::set('user_name', $result->user_name);
+            Session::set('company_id', $result->company_id);
+            Session::set('company_name', $result->company_name);
             Session::set('user_email', $result->user_email);
             Session::set('user_account_type', $result->user_account_type);
             Session::set('user_provider_type', 'DEFAULT');
@@ -423,6 +427,8 @@ class LoginModel
         // perform all necessary form checks
         if (!$this->checkCaptcha()) {
             $_SESSION["feedback_negative"][] = FEEDBACK_CAPTCHA_WRONG;
+        } elseif (empty($_POST['company_name'])) {
+            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_FIELD_EMPTY;
         } elseif (empty($_POST['user_name'])) {
             $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_FIELD_EMPTY;
         } elseif (empty($_POST['user_password_new']) OR empty($_POST['user_password_repeat'])) {
@@ -442,6 +448,8 @@ class LoginModel
         } elseif (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_DOES_NOT_FIT_PATTERN;
         } elseif (!empty($_POST['user_name'])
+            AND strlen($_POST['company_name']) <= 64
+            AND strlen($_POST['company_name']) >= 2
             AND strlen($_POST['user_name']) <= 64
             AND strlen($_POST['user_name']) >= 2
             AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])
@@ -453,6 +461,7 @@ class LoginModel
             AND ($_POST['user_password_new'] === $_POST['user_password_repeat'])) {
 
             // clean the input
+            $company_name = strip_tags($_POST['company_name']);
             $user_name = strip_tags($_POST['user_name']);
             $user_email = strip_tags($_POST['user_email']);
 
@@ -486,11 +495,30 @@ class LoginModel
             // generate integer-timestamp for saving of account-creating date
             $user_creation_timestamp = time();
 
-            // write new users data into database
-            $sql = "INSERT INTO users (user_name, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type)
-                    VALUES (:user_name, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type)";
+            // write a new company into database
+            $sql = "INSERT INTO companies (company_name, company_active, company_account_type, company_creation_timestamp)
+                    VALUES (:company_name, :company_active, :company_account_type, :company_creation_timestamp)";
             $query = $this->db->prepare($sql);
-            $query->execute(array(':user_name' => $user_name,
+            $query->execute(array(':company_name' => $company_name,
+                                  ':company_active' => 1,
+                                  ':company_account_type' => 0,
+                                  ':company_creation_timestamp' => $user_creation_timestamp));
+            $count =  $query->rowCount();
+            if ($count != 1) {
+                $_SESSION["feedback_negative"][] = FEEDBACK_ACCOUNT_CREATION_FAILED;
+                return false;
+            }
+            else {
+                // If request is successful, get Id for next insert (user)
+                $company_id = $this->db->lastInsertId();
+            }
+
+            // write new users data into database
+            $sql = "INSERT INTO users (company_id, user_name, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type)
+                    VALUES (:company_id, :user_name, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type)";
+            $query = $this->db->prepare($sql);
+            $query->execute(array(':company_id' => $company_id,
+                                  ':user_name' => $user_name,
                                   ':user_password_hash' => $user_password_hash,
                                   ':user_email' => $user_email,
                                   ':user_creation_timestamp' => $user_creation_timestamp,
@@ -1218,10 +1246,10 @@ class LoginModel
         // check if a user with that username already exists in our database
         // note: Facebook's internal username is usually the person's full name plus a number (and dots between)
         if ($this->facebookUserNameExistsAlreadyInDatabase($facebook_user_data)) {
-        	$facebook_user_data["username"] = $this->generateUniqueUserNameFromExistingUserName($facebook_user_data["username"]);
+            $facebook_user_data["username"] = $this->generateUniqueUserNameFromExistingUserName($facebook_user_data["username"]);
          if ($this->facebookUserNameExistsAlreadyInDatabase($facebook_user_data)) {
-        	//shouldn't get here if we managed to generate a unique name!
-        	$_SESSION["feedback_negative"][] = FEEDBACK_FACEBOOK_USERNAME_ALREADY_EXISTS;
+            //shouldn't get here if we managed to generate a unique name!
+            $_SESSION["feedback_negative"][] = FEEDBACK_FACEBOOK_USERNAME_ALREADY_EXISTS;
           return false;
          }
         }
@@ -1361,21 +1389,21 @@ class LoginModel
      */
     public function generateUniqueUserNameFromExistingUserName($existing_name)
     {
-    	//strip any dots, trailing numbers and white spaces
+        //strip any dots, trailing numbers and white spaces
         $existing_name = str_replace(".", "", $existing_name);
         $existing_name = preg_replace('/\s*\d+$/', '', $existing_name);
 
         // loop until we have a new username, adding an increasing number to the given string every time
-    	$n = 0;
-    	do {
+        $n = 0;
+        do {
             $n = $n+1;
             $new_username = $existing_name . $n;
             $query = $this->db->prepare("SELECT user_id FROM users WHERE user_name = :name_with_number");
             $query->execute(array(':name_with_number' => $new_username));
-    	 	 
-    	 } while ($query->rowCount() == 1);
+             
+         } while ($query->rowCount() == 1);
 
-    	return $new_username;
+        return $new_username;
     }
 
 }
