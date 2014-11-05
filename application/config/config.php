@@ -20,7 +20,7 @@ ini_set("display_errors", 1);
  * if you are using a (different) port, then put this in here, like http://mydomain:8888/subfolder/
  * Note: The trailing slash is important!
  */
-define('URL', 'http://localhost/php-login/');
+define('URL', 'http://localhost:8888/sanity/');
 
 /**
  * Configuration for: Folders
@@ -53,7 +53,7 @@ define('FACEBOOK_REGISTER_PATH', 'login/registerWithFacebook');
  * AVATAR_DEFAULT_IMAGE is the default image in public/avatars/
  */
 define('USE_GRAVATAR', false);
-define('AVATAR_SIZE', 44);
+define('AVATAR_SIZE', 30);
 define('AVATAR_JPEG_QUALITY', 85);
 define('AVATAR_DEFAULT_IMAGE', 'default.jpg');
 
@@ -91,10 +91,10 @@ define('COOKIE_DOMAIN', '.localhost');
  * define('DB_PASS', 'xxx');
  */
 define('DB_TYPE', 'mysql');
-define('DB_HOST', '127.0.0.1');
-define('DB_NAME', 'login');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'sanity');
 define('DB_USER', 'root');
-define('DB_PASS', 'mysql');
+define('DB_PASS', 'root');
 
 /**
  * Configuration for: Hashing strength
@@ -151,13 +151,13 @@ define("PHPMAILER_DEBUG_MODE", 0);
 // use SMTP or basic mail() ? SMTP is strongly recommended
 define("EMAIL_USE_SMTP", false);
 // name of your host
-define("EMAIL_SMTP_HOST", 'yourhost');
+define("EMAIL_SMTP_HOST", 'ssl://smtp.gmail.com');
 // leave this true until your SMTP can be used without login
 define("EMAIL_SMTP_AUTH", true);
 // SMTP provider username
-define("EMAIL_SMTP_USERNAME", 'yourusername');
+define("EMAIL_SMTP_USERNAME", 'xxxxxxxxxxx@gmail.com');
 // SMTP provider password
-define("EMAIL_SMTP_PASSWORD", 'yourpassword');
+define("EMAIL_SMTP_PASSWORD", 'xxxxxxxxxxxxxxxxxxxx');
 // SMTP provider port
 define("EMAIL_SMTP_PORT", 465);
 // SMTP encryption, usually SMTP providers use "tls" or "ssl", for details see the PHPMailer manual
@@ -226,7 +226,7 @@ define("FEEDBACK_CAPTCHA_WRONG", "The entered captcha security characters were w
 define("FEEDBACK_PASSWORD_REPEAT_WRONG", "Password and password repeat are not the same.");
 define("FEEDBACK_PASSWORD_TOO_SHORT", "Password has a minimum length of 6 characters.");
 define("FEEDBACK_USERNAME_TOO_SHORT_OR_TOO_LONG", "Username cannot be shorter than 2 or longer than 64 characters.");
-define("FEEDBACK_EMAIL_TOO_LONG", "Email cannot be longer than 64 characters.");
+define("FEEDBACK_EMAIL_TOO_LONG", "Email cannot be longer than 128 characters.");
 define("FEEDBACK_ACCOUNT_SUCCESSFULLY_CREATED", "Your account has been created successfully and we have sent you an email. Please click the VERIFICATION LINK within that mail.");
 define("FEEDBACK_VERIFICATION_MAIL_SENDING_FAILED", "Sorry, we could not send you an verification mail. Your account has NOT been created.");
 define("FEEDBACK_ACCOUNT_CREATION_FAILED", "Sorry, your registration failed. Please go back and try again.");

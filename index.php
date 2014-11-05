@@ -23,5 +23,9 @@ if (file_exists('vendor/autoload.php')) {
     require 'vendor/autoload.php';
 }
 
+// run the scss compiler every time the application is hit (in development)
+// TODO: build a switch for development/production
+SassCompiler::run("public/scss/", "public/css/");
+
 // Start our application
 $app = new Application();
