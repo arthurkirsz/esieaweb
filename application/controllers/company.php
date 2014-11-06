@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Class Overview
+ * Class Company
  * This controller shows the (public) account data of one or all user(s)
  */
-class Overview extends Controller
+class Company extends Controller
 {
     /**
      * Construct this object by extending the basic Controller class
@@ -12,6 +12,11 @@ class Overview extends Controller
     function __construct()
     {
         parent::__construct();
+
+        // VERY IMPORTANT: All controllers/areas that should only be usable by logged-in users
+        // need this line! Otherwise not-logged in users could do actions. If all of your pages should only
+        // be usable by logged-in users: Put this line into libs/Controller->__construct
+        Auth::handleLogin();
     }
 
     /**
@@ -21,8 +26,8 @@ class Overview extends Controller
     function index()
     {
         $overview_model = $this->loadModel('Overview');
-        $this->view->users = $overview_model->getAllUsersProfiles();
-        $this->view->render('overview/index');
+        $this->view->users = $overview_model->getCompanyInformations();
+        $this->view->render('company/index');
     }
 
     /**

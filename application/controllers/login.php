@@ -28,8 +28,8 @@ class Login extends Controller
             $this->view->facebook_login_url = $login_model->getFacebookLoginUrl();
         }
 
-        // show the view
-        $this->view->render('login/index');
+        // show the view without including header/footer tmpl
+        $this->view->render('login/index', true);
     }
 
     /**
@@ -44,7 +44,7 @@ class Login extends Controller
 
         // check login status
         if ($login_successful) {
-            // if YES, then move user to dashboard/index (btw this is a browser-redirection, not a rendered view!)
+            // if YES, then move user to index/index (btw this is a browser-redirection, not a rendered view!)
             header('location: ' . URL . 'dashboard/index');
         } else {
             // if NO, then move user to login/index (login form) again
@@ -227,7 +227,7 @@ class Login extends Controller
             $this->view->facebook_register_url = $login_model->getFacebookRegisterUrl();
         }
 
-        $this->view->render('login/register');
+        $this->view->render('login/register', true);
     }
 
     /**

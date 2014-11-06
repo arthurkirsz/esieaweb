@@ -12,6 +12,7 @@ class Index extends Controller
     function __construct()
     {
             parent::__construct();
+            
     }
 
     /**
@@ -20,6 +21,6 @@ class Index extends Controller
      */
     function index()
     {
-            $this->view->render('index/index');
+            $this->view->render('index/index', true);
     }
 }
