@@ -1246,10 +1246,10 @@ class LoginModel
         // check if a user with that username already exists in our database
         // note: Facebook's internal username is usually the person's full name plus a number (and dots between)
         if ($this->facebookUserNameExistsAlreadyInDatabase($facebook_user_data)) {
-            $facebook_user_data["username"] = $this->generateUniqueUserNameFromExistingUserName($facebook_user_data["username"]);
+        	$facebook_user_data["username"] = $this->generateUniqueUserNameFromExistingUserName($facebook_user_data["username"]);
          if ($this->facebookUserNameExistsAlreadyInDatabase($facebook_user_data)) {
-            //shouldn't get here if we managed to generate a unique name!
-            $_SESSION["feedback_negative"][] = FEEDBACK_FACEBOOK_USERNAME_ALREADY_EXISTS;
+        	//shouldn't get here if we managed to generate a unique name!
+        	$_SESSION["feedback_negative"][] = FEEDBACK_FACEBOOK_USERNAME_ALREADY_EXISTS;
           return false;
          }
         }
@@ -1389,21 +1389,21 @@ class LoginModel
      */
     public function generateUniqueUserNameFromExistingUserName($existing_name)
     {
-        //strip any dots, trailing numbers and white spaces
+    	//strip any dots, trailing numbers and white spaces
         $existing_name = str_replace(".", "", $existing_name);
         $existing_name = preg_replace('/\s*\d+$/', '', $existing_name);
 
         // loop until we have a new username, adding an increasing number to the given string every time
-        $n = 0;
-        do {
+    	$n = 0;
+    	do {
             $n = $n+1;
             $new_username = $existing_name . $n;
             $query = $this->db->prepare("SELECT user_id FROM users WHERE user_name = :name_with_number");
             $query->execute(array(':name_with_number' => $new_username));
-             
-         } while ($query->rowCount() == 1);
+    	 	 
+    	 } while ($query->rowCount() == 1);
 
-        return $new_username;
+    	return $new_username;
     }
 
 }
