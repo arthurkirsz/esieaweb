@@ -60,9 +60,9 @@
                                     font-size: 15px;">' . $request->request_date . '</div>';
 
 
-                                    echo '<div class="left test" style="width: 50px;"></div>';
-                                    echo '<div class="left test3" style="width: 20px;"> -> </div>';
-                                    echo '<div class="left test2" style="width: 50px;"></div>';
+                                    // echo '<div class="left test" style="width: 50px;"></div>';
+                                    // echo '<div class="left test3" style="width: 20px;"> -> </div>';
+                                    // echo '<div class="left test2" style="width: 50px;"></div>';
 
                             echo '<div class="left">' . $request->request_length . ' ' .($request->request_length > 1 ? 'jours' : 'jour') . '</div>';
 
@@ -90,11 +90,11 @@
 
             var startdate = $(this).find('#startdate').val();
             var dd = moment(new Date(startdate*1000)).format('DD MMM');
-            $(this).find('.test').html(dd);            
+            // $(this).find('.test').html(dd);            
 
             var enddate = $(this).find('#enddate').val();
             dd = moment(new Date(enddate*1000)).format('DD MMM');
-            $(this).find('.test2').html(dd);
+            // $(this).find('.test2').html(dd);
         });
     });
 

@@ -47,6 +47,34 @@ class Request extends Controller
     }
 
     /**
+     * Add a new request to the database.
+     */
+    function edit($id)
+    {
+        if (isset($id)) {
+            $request_model = $this->loadModel('Request');
+            $this->view->requests = $request_model->getRequestFromId($id);
+            $this->view->render('request/edit');
+        } else {
+            header('location: ' . URL . 'request/index');
+        }
+    }
+
+    /**
+     * Add a new request to the database.
+     */
+    function update($id)
+    {
+        if (isset($id)) {
+            $request_model = $this->loadModel('Request');
+            $this->view->requests = $request_model->updateRequest($id);
+            header('location: ' . URL . 'request/index');
+        } else {
+            header('location: ' . URL . 'request/index');
+        }
+    }
+
+    /**
      * Creates a new request in the DB
      */
     function create()
